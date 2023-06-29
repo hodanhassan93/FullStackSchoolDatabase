@@ -27,7 +27,16 @@ public class StudentDaoImpl implements StudentDao {
     public Student createNewStudent(Student student) {
         //YOUR CODE STARTS HERE
 
-         return null;
+        try {
+            jdbcTemplate.update(
+                    "INSERT INTO student (sid, fName, lName) VALUES (?, ?, ?)",
+                    student.getStudentId(), student.getStudentFirstName(), student.getStudentLastName()
+            );
+            return student;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
 
         //YOUR CODE ENDS HERE
     }
@@ -36,7 +45,12 @@ public class StudentDaoImpl implements StudentDao {
     public List<Student> getAllStudents() {
         //YOUR CODE STARTS HERE
 
-        return null;
+        try {
+            return jdbcTemplate.query("SELECT * FROM student", new StudentMapper());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
 
         //YOUR CODE ENDS HERE
     }
@@ -45,7 +59,16 @@ public class StudentDaoImpl implements StudentDao {
     public Student findStudentById(int id) {
         //YOUR CODE STARTS HERE
 
-        return null;
+        try {
+            return jdbcTemplate.queryForObject(
+                    "SELECT * FROM student WHERE sid = ?",
+                    new StudentMapper(),
+                    id
+            );
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
 
         //YOUR CODE ENDS HERE
     }
@@ -53,7 +76,14 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public void updateStudent(Student student) {
         //YOUR CODE STARTS HERE
-
+        try {
+            jdbcTemplate.update(
+                    "UPDATE student SET fName = ?, lName = ? WHERE sid = ?",
+                    student.getStudentFirstName(), student.getStudentLastName(), student.getStudentId()
+            );
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         //YOUR CODE ENDS HERE
     }
@@ -61,8 +91,11 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public void deleteStudent(int id) {
         //YOUR CODE STARTS HERE
-
-
+        try {
+            jdbcTemplate.update("DELETE FROM student WHERE sid = ?", id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         //YOUR CODE ENDS HERE
     }
@@ -70,8 +103,14 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public void addStudentToCourse(int studentId, int courseId) {
         //YOUR CODE STARTS HERE
-
-
+        try {
+            jdbcTemplate.update(
+                    "INSERT INTO course_student (student_id, course_id) VALUES (?, ?)",
+                    studentId, courseId
+            );
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         //YOUR CODE ENDS HERE
     }
@@ -79,8 +118,14 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public void deleteStudentFromCourse(int studentId, int courseId) {
         //YOUR CODE STARTS HERE
-
-
+        try {
+            jdbcTemplate.update(
+                    "DELETE FROM course_student WHERE student_id = ? AND course_id = ?",
+                    studentId, courseId
+            );
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         //YOUR CODE ENDS HERE
     }
