@@ -1,0 +1,14 @@
+{
+  "tests": [
+    {
+      "name": "Autograding",
+      "setup": "",
+      "run": "mvn -B package --file java-school-fullstack/pom.xml",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 70
+    }
+  ]
+}
